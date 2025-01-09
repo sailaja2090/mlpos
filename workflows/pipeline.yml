@@ -4,33 +4,39 @@ on:
   push:
     branches:
       - main
+      - master
       - add_pipeline
+  pull_request:
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
-      - name: Install dependencies
-        run: pip install flake8
-      - name: Run linter
-        run: flake8 model.py
+
+      - name: Install Linter
+        run: |
+          pip install flake8
+          flake8 model.py
 
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
-      - name: Install dependencies
-        run: pip install pytest
-      - name: Run tests
-        run: pytest
+
+      - name: Install Dependencies
+        run: |
+          pip install pytest
+          pytest
